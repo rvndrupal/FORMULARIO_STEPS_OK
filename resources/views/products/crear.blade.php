@@ -20,7 +20,7 @@
                     <h3>Uno</h3>
                     <section>
                         <label for="nombre">Nombre *</label>
-                        <input id="nombre" name="nombre" type="text" class="required">
+                        <input id="nombre" name="nombre_producto" type="text" class="required">
                         <p>(*) Mandatory</p>
                     </section>
 
@@ -28,15 +28,35 @@
 
                     <section>
                         <label for="ap">Apellido Paterno *</label>
-                        <input id="ap" name="ap" type="text" class="required">
+                        <input id="ap" name="ap_producto" type="text" class="required">
                         <p>(*) Mandatory</p>
                     </section>
 
-                    <h3>Final</h3>
+                    <h3>Datos Finales</h3>
                     <section>
-                        <label for="am">Apellido Materno *</label>
-                        <input id="am" name="am" type="text" class="required">
-                        <p>(*) Mandatory</p>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Descripción</th>
+                                            <th><a href="#" class="btn btn-info addRow">+</a></th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="text" name="nombre_curso[]" class="form-control"></td>
+                                            <td><input type="text" name="descripcion_curso[]" class="form-control"></td>
+                                            <td><a href="#" class="btn btn-danger remove">-</a></td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
                     </section>
 
 
@@ -51,6 +71,30 @@
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+<script>
+    $('.addRow').on('click',function(){
+        agregarFila();
+    });
+
+    function agregarFila(){
+        var tr=
+        '<tr>'+
+                '<td><input type="text" name="nombre_curso[]" class="form-control"></td>'+
+                '<td><input type="text" name="descripcion_curso[]" class="form-control"></td>'+
+                '<td><a href="#" class="btn btn-danger remove">-</a></td>'+
+        '</tr>';
+
+        $('tbody').append(tr);
+    }
+
+    $('tbody').on('click','.remove', function()
+    {
+        $(this).parent().parent().remove();
+    });
+</script>
+
 
 </body>
 </html>

@@ -20,7 +20,7 @@
                                 <th width="10px">ID</th>
                                 <th>Nombre</th>
                                 <th>Apellido Paterno</th>
-                                <th>Apellido Materno</th>
+
                                 <th colspan="3">&nbsp;</th>
                             </tr>
                         </thead>
@@ -28,9 +28,9 @@
                             @foreach($productos as $products)
                             <tr>
                                 <td>{{ $products->id }}</td>
-                                <td>{{ $products->nombre }}</td>
-                                <td>{{ $products->ap }}</td>
-                                <td>{{ $products->am }}</td>
+                                <td>{{ $products->nombre_producto }}</td>
+                                <td>{{ $products->ap_producto }}</td>
+
                                 <td width="10px">
                                     <a href="#" class="btn btn-sm btn-default">Ver</a>
                                 </td>
