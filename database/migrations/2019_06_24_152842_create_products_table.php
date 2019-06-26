@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('nombre_producto');
             $table->string('ap_producto');
+            $table->string('slug_producto', 128)->unique();
             $table->timestamps();
         });
     }

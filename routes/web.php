@@ -26,11 +26,11 @@ Route::post('/store', 'ProductsController@store')->name('store');
 Route::delete('/delete', 'ProductsController@destroy')->name('destroy');
 
 
-Route::get('/editarlo/{products}', 'ProductsController@edit')->name('edit');
+Route::get('/editarlo/{slug_producto}', 'ProductsController@edit')->name('edit');
 
-Route::post('/actualizar/{id}', 'ProductsController@update')->name('actualizar');
+Route::post('/actualizar/{slug_producto}', 'ProductsController@update')->name('actualizar');
 
-Route::delete('/delete/{products}', 'ProductsController@destroy')->name('delete');
+Route::delete('/delete/{slug_producto}', 'ProductsController@destroy')->name('delete');
 
 
 

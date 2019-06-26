@@ -14,16 +14,25 @@
 </head>
 <body>
 
-        <form id="example-form" action="{{ route('actualizar', $products->id) }}" method="post" >
+        <form id="example-form" action="{{ route('actualizar', $products->slug_producto) }}" method="post" >
                 {{ csrf_field() }}
                 <div>
                     <h3>Uno</h3>
                     <section>
-                        <?php //dd($products->cursos); ?>
-                        <input type="hidden" name="id" value="{{ $products->id }}">
-                        <label for="nombre">Nombre *</label>
-                        <input id="nombre" name="nombre_producto" type="text" class="required" value="{{  $products->nombre_producto }}">
-                        <p>(*) Mandatory</p>
+                        <div class="container">
+                                <div class="row">
+                                    <div class="datos col-md-3">
+                                            <label for="nombre">Nombre *</label>
+                                            <input id="nombre_producto" name="nombre_producto" value="{{ $products->nombre_producto }}" type="text" class="required">
+                                            <p>(*) Mandatory</p>
+                                    </div>
+                                    <div class="dos col-md-3">
+                                            <label for="slug">Url amigable *</label>
+                                            <input id="slug_producto" name="slug_producto" value="{{ $products->slug_producto }}"" type="text" class="required" readonly >
+                                            <p>(*) No se puede modificar</p>
+                                    </div>
+                                </div>
+                        </div>
                     </section>
 
                     <h3>Dos</h3>
@@ -70,11 +79,11 @@
             </form>
 
 
-            <script src="{{ asset('js/jquery-1.11.1.min.js') }}"></script>
+            <script src="{{ asset('js/jquery-3.4.1.js') }}"></script>
             <script src="{{ asset('js/jquery.steps.js') }}"></script>
             <script src="{{  asset('js/jquery.validate.min.js')}}"></script>
             <script src="{{ asset('js/script.js') }}"></script>
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="{{ asset('vendor/stringToSlug/jquery.stringToSlug.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
@@ -99,6 +108,17 @@
             $(this).parent().parent().remove();
         });
     </script>
+
+    <script>
+            //pra el slug
+            $(document).ready(function(){
+                $("#nombre_producto, #slug_producto").stringToSlug({
+                    callback: function(text){
+                        $('#slug_producto').val(text);
+                    }
+                });
+            });
+        </script>
 
 
 </body>

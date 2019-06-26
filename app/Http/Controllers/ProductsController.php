@@ -52,6 +52,7 @@ class ProductsController extends Controller
       $data= $request->validate([
 
         'nombre_producto'=>'required',
+        'slug_producto'=>'required',
         'ap_producto'=>'required',
         'nombre_curso'=>'required',
         'descripcion_curso'=>'required'
@@ -62,7 +63,8 @@ class ProductsController extends Controller
      DB::transaction(function () use ($data, $request) {
          $producto=Products::create([
             'nombre_producto'=>$data['nombre_producto'],
-            'ap_producto'=>$data['ap_producto']
+            'ap_producto'=>$data['ap_producto'],
+            'slug_producto'=>$data['slug_producto']
          ]);
 
         //se inserta ahora lo de cursos
@@ -96,9 +98,17 @@ class ProductsController extends Controller
      * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function edit(Products $products)
+    public function edit(Products $products, $slug_producto)
     {
-        $products = Products::with('cursos')->find($products->id);
+        $buscar= Products::where('slug_producto','=',$slug_producto)->get();
+        // dd($buscar->products->id);
+         foreach ($buscar as $rid) {
+            $rid=$rid->id;
+            //dd($rid);        // dd($rid);
+        }
+        $products = Products::with('cursos')->find($rid);
+
+        //dd($products);
 
         return view('products.editar', compact('products'));
     }
@@ -110,8 +120,14 @@ class ProductsController extends Controller
      * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Products $products, $id)
+    public function update(Request $request, Products $products, $slug_producto)
     {
+        $buscar= Products::where('slug_producto','=',$slug_producto)->get();
+        // dd($buscar->products->id);
+         foreach ($buscar as $rid) {
+            $rid=$rid->id;
+           // dd($rid);        // dd($rid);
+        }
 
         $request->validate([
 
@@ -125,16 +141,17 @@ class ProductsController extends Controller
 
 
 
-        DB::transaction(function () use ($request, $id) {
-            $producto = Products::with('cursos')->find($id);
+        DB::transaction(function () use ($request, $rid) {
+            $producto = Products::with('cursos')->find($rid);
 
             //dd($producto->cursos);
 
             $producto->nombre_producto=$request->get('nombre_producto');
             $producto->ap_producto=$request->get('ap_producto');
+            $producto->slug_producto=$request->get('slug_producto');
             $producto->save();
 
-            $producto->cursos()->delete($id);
+            $producto->cursos()->delete($rid);
             //se inserta ahora lo de cursos
             //se utiliza la relacion de una vexx
            foreach($request->nombre_curso as $item=>$v)
@@ -161,9 +178,18 @@ class ProductsController extends Controller
      * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Products $products)
+    public function destroy(Products $products, $slug_producto)
     {
-        $producto = Products::find($products->id)->delete();
+         $buscar= Products::where('slug_producto','=',$slug_producto)->get();
+        // dd($buscar->products->id);
+         foreach ($buscar as $rid) {
+            $rid=$rid->id;           // dd($rid);
+        }
+
+
+        //dd($buscar_id);
+
+        $producto = Products::find($rid)->delete();
         return redirect()->route('index');
     }
 }

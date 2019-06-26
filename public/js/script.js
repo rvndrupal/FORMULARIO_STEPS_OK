@@ -1,3 +1,4 @@
+
 var form = $("#example-form");
 form.validate({
     errorPlacement: function errorPlacement(error, element) { element.before(error); },
@@ -28,4 +29,9 @@ form.children("div").steps({
         form.submit();
     }
 });
+
+
+
+
+
 

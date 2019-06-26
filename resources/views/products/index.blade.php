@@ -20,7 +20,8 @@
                                 <th width="10px">ID</th>
                                 <th>Nombre</th>
                                 <th>Apellido Paterno</th>
-                                <th>Curso</th>
+                                <th>Url</th>
+                                <th>Ver</th>
                                 <th>Descripción</th>
 
                                 <th colspan="3">&nbsp;</th>
@@ -33,6 +34,7 @@
                                 <td>{{ $products->id }}</td>
                                 <td>{{ $products->nombre_producto }}</td>
                                 <td>{{ $products->ap_producto }}</td>
+                                <td>{{ $products->slug_producto }}</td>
                                     {{--  @foreach($products['cursos'] as $item)
                                     <td>{{ $item->nombre_curso }}</td>
                                     @endforeach  --}}
@@ -40,11 +42,11 @@
                                     <a href="#" class="btn btn-sm btn-default">Ver</a>
                                 </td>
                                 <td width="10px">
-                                    <a href="{{ route('edit', $products->id) }}" class="btn btn-sm btn-default">Editar</a>
+                                    <a href="{{ route('edit', $products->slug_producto) }}" class="btn btn-sm btn-default">Editar</a>
                                 </td>
                                 <td width="10px">
 
-                                    <form action="{{ route('delete', $products->id)}}" method="post">
+                                    <form action="{{ route('delete', $products->slug_producto)}}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-sm btn-danger" type="submit">Eliminar</button>
