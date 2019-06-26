@@ -20,6 +20,8 @@
                                 <th width="10px">ID</th>
                                 <th>Nombre</th>
                                 <th>Apellido Paterno</th>
+                                <th>Curso</th>
+                                <th>Descripción</th>
 
                                 <th colspan="3">&nbsp;</th>
                             </tr>
@@ -27,10 +29,13 @@
                         <tbody>
                             @foreach($productos as $products)
                             <tr>
+
                                 <td>{{ $products->id }}</td>
                                 <td>{{ $products->nombre_producto }}</td>
                                 <td>{{ $products->ap_producto }}</td>
-
+                                    {{--  @foreach($products['cursos'] as $item)
+                                    <td>{{ $item->nombre_curso }}</td>
+                                    @endforeach  --}}
                                 <td width="10px">
                                     <a href="#" class="btn btn-sm btn-default">Ver</a>
                                 </td>

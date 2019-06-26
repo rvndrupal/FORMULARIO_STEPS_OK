@@ -28,7 +28,7 @@ Route::delete('/delete', 'ProductsController@destroy')->name('destroy');
 
 Route::get('/editarlo/{products}', 'ProductsController@edit')->name('edit');
 
-Route::post('/actualizar/{products}', 'ProductsController@update')->name('actualizar');
+Route::post('/actualizar/{id}', 'ProductsController@update')->name('actualizar');
 
 Route::delete('/delete/{products}', 'ProductsController@destroy')->name('delete');
 

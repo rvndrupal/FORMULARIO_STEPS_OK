@@ -23,9 +23,9 @@ class ProductsController extends Controller
 
     public function index()
     {
-        $productos=Products::orderBy('id','DESC')->paginate(3);
+        $productos=Products::with('cursos')->orderBy('id','DESC')->paginate(3);
 
-       // dd($productos);
+        //dd($productos);
 
         return view('products.index',compact('productos'));
     }
@@ -76,12 +76,6 @@ class ProductsController extends Controller
 
            }
      });
-
-
-
-
-
-
        return redirect()->route('index');
     }
 
@@ -104,7 +98,8 @@ class ProductsController extends Controller
      */
     public function edit(Products $products)
     {
-        //dd($products);
+        $products = Products::with('cursos')->find($products->id);
+
         return view('products.editar', compact('products'));
     }
 
@@ -115,11 +110,46 @@ class ProductsController extends Controller
      * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Products $products)
+    public function update(Request $request, Products $products, $id)
     {
-        $producto = Products::find($products->id);
-        //dd($producto);
-        $producto->fill($request->all())->save();
+
+        $request->validate([
+
+            'nombre_producto'=>'required',
+            'ap_producto'=>'required',
+            'nombre_curso'=>'required',
+            'descripcion_curso'=>'required'
+          ],[
+              'nombre_producto.required'=>'El campo nombre es obligatorio'
+          ]);
+
+
+
+        DB::transaction(function () use ($request, $id) {
+            $producto = Products::with('cursos')->find($id);
+
+            //dd($producto->cursos);
+
+            $producto->nombre_producto=$request->get('nombre_producto');
+            $producto->ap_producto=$request->get('ap_producto');
+            $producto->save();
+
+            $producto->cursos()->delete($id);
+            //se inserta ahora lo de cursos
+            //se utiliza la relacion de una vexx
+           foreach($request->nombre_curso as $item=>$v)
+              {
+
+                  //dd($item);
+                $producto->cursos()->create([
+                    'nombre_curso'=>$request->nombre_curso[$item],
+                    'descripcion_curso'=>$request->descripcion_curso[$item]
+                ]);
+
+              }
+
+        });
+
 
         return redirect()->route('index');
 
