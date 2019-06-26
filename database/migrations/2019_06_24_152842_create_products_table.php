@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('ap_producto');
             $table->string('slug_producto', 128)->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

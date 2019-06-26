@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 
 Route::get('/index', 'ProductsController@index')->name('index');
+Route::get('/indexlog', 'ProductsController@indexlog')->name('indexlog');
 
 Route::get('/add', 'ProductsController@crear')->name('add');
 
@@ -31,6 +32,11 @@ Route::get('/editarlo/{slug_producto}', 'ProductsController@edit')->name('edit')
 Route::post('/actualizar/{slug_producto}', 'ProductsController@update')->name('actualizar');
 
 Route::delete('/delete/{slug_producto}', 'ProductsController@destroy')->name('delete');
+
+Route::delete('/permanente/{slug_producto}', 'ProductsController@destroy_permanente')->name('delete_permanente');
+
+
+Route::get('/recuperar/{slug_producto}', 'ProductsController@restaurar')->name('recuperar');
 
 
 

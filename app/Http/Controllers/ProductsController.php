@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
+
 class ProductsController extends Controller
 {
     /**
@@ -23,11 +24,16 @@ class ProductsController extends Controller
 
     public function index()
     {
-        $productos=Products::with('cursos')->orderBy('id','DESC')->paginate(3);
-
+        $productos=Products::with('cursos')->orderBy('id','DESC')->paginate(9);
         //dd($productos);
-
         return view('products.index',compact('productos'));
+    }
+
+    public function indexlog()
+    {
+        $productos=Products::onlyTrashed()->with('cursos')->orderBy('id','DESC')->paginate(9);
+        //dd($productos);
+        return view('products.indexlog',compact('productos'));
     }
 
     /**
@@ -167,7 +173,6 @@ class ProductsController extends Controller
 
         });
 
-
         return redirect()->route('index');
 
     }
@@ -181,15 +186,36 @@ class ProductsController extends Controller
     public function destroy(Products $products, $slug_producto)
     {
          $buscar= Products::where('slug_producto','=',$slug_producto)->get();
-        // dd($buscar->products->id);
          foreach ($buscar as $rid) {
-            $rid=$rid->id;           // dd($rid);
+            $rid=$rid->id;
+            //dd($rid);      // dd($rid);
         }
-
-
-        //dd($buscar_id);
-
         $producto = Products::find($rid)->delete();
         return redirect()->route('index');
+    }
+
+    public function restaurar($slug_producto)
+    {
+
+        $buscar= Products::onlyTrashed()->where('slug_producto','=',$slug_producto)->get();
+        //dd($buscar);
+         foreach ($buscar as $rid) {
+            $rid=$rid->id;
+            //dd($rid);      // dd($rid);
+        }
+        $producto = Products::onlyTrashed()->find($rid)->restore();
+        return redirect()->route('indexlog');
+
+    }
+
+    public function destroy_permanente(Products $products, $slug_producto)
+    {
+         $buscar= Products::onlyTrashed()->where('slug_producto','=',$slug_producto)->get();
+         foreach ($buscar as $rid) {
+            $rid=$rid->id;
+            //dd($rid);      // dd($rid);
+        }
+        $producto = Products::onlyTrashed()->find($rid)->forceDelete();
+        return redirect()->route('indexlog');
     }
 }

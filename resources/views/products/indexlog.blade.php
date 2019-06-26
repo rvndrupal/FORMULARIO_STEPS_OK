@@ -1,8 +1,3 @@
-
-<script src="{{ asset('js/alertify.js') }}"></script>
-
-<link rel="stylesheet" href="{{ asset('css/alertify.min.css') }}" />
-<link rel="stylesheet" href="{{ asset('css/default.min.css') }}" />
 @extends('layouts.app')
 
 @section('content')
@@ -10,13 +5,14 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
+                    <h1>Lista con Elementos Borrados Lógicos</h1>
                 <div class="panel-heading">
-                    Lista de Categorías
                     <a href="{{ route('add') }}" class="pull-right btn btn-sm btn-primary">
                         Crear
                     </a>
-                    <a href="{{ route('indexlog') }}" class="pull-right btn btn-sm btn-dark">
-                            Lista Borrados Lógicos
+
+                    <a href="{{ route('index') }}" class="pull-right btn btn-sm btn-dark">
+                        Lista normal
                     </a>
                 </div>
 
@@ -31,7 +27,8 @@
                                 <th>Url</th>
                                 <th>Ver</th>
                                 <th>Descripción</th>
-                                <th>Eliminar</th>
+                                <th>Eliminar </th>
+                                <th>Recuperar</th>
 
                                 <th colspan="3">&nbsp;</th>
                             </tr>
@@ -55,13 +52,14 @@
                                 </td>
                                 <td width="10px">
 
-                                    <form action="{{ route('delete', $products->slug_producto)}}" method="post">
+                                    <form action="{{ route('delete_permanente', $products->slug_producto)}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Estas seguro')">Eliminar</button>
-
-                                    </form>
-
+                                            <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Estas seguro')">Eliminado Permanente</button>
+                                          </form>
+                                </td>
+                                <td width="10px">
+                                        <a href="{{ route('recuperar', $products->slug_producto) }}" class="btn btn-sm btn-success" onclick="return confirm('Estas seguro')">Recuperar</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -75,7 +73,3 @@
     </div>
 </div>
 @endsection
-
-
-
-

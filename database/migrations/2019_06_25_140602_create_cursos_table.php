@@ -24,6 +24,8 @@ class CreateCursosTable extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
 
+            $table->softDeletes();
+
 
         });
     }
