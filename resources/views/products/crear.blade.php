@@ -14,7 +14,7 @@
 </head>
 <body>
 
-        <form id="example-form" action="{{ route('store') }}" method="post" >
+        <form id="example-form" action="{{ route('store') }}" method="post"  enctype="multipart/form-data" >
                 {{ csrf_field() }}
                 <div>
                     <h3>Uno</h3>
@@ -44,6 +44,9 @@
                     <section>
                         <label for="ap">Apellido Paterno *</label>
                         <input id="ap" name="ap_producto" type="text" class="required">
+                        <p>(*) Mandatory</p>
+                        <label for="imagen_producto">Foto *</label>
+                        <input id="aimagen_producto" name="imagen_producto" type="file" class="required">
                         <p>(*) Mandatory</p>
                     </section>
 

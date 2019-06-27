@@ -14,7 +14,7 @@
 </head>
 <body>
 
-        <form id="example-form" action="{{ route('actualizar', $products->slug_producto) }}" method="post" >
+        <form id="example-form" action="{{ route('actualizar', $products->slug_producto) }}" method="post" enctype="multipart/form-data" >
                 {{ csrf_field() }}
                 <div>
                     <h3>Uno</h3>
@@ -40,6 +40,10 @@
                     <section>
                         <label for="ap">Apellido Paterno *</label>
                         <input id="ap" name="ap_producto" type="text" class="required" value="{{  $products->ap_producto }}">
+                        <p>(*) Mandatory</p>
+                        <img src="{{ $products->imagen_producto }}" width="100px" height="100px"><hr>
+                        <label for="imagen_producto">Foto *</label>
+                        <input id="imagen_producto" name="imagen_producto" type="file" class="required">
                         <p>(*) Mandatory</p>
                     </section>
 

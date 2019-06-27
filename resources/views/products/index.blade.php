@@ -29,6 +29,7 @@
                                 <th>Nombre</th>
                                 <th>Apellido Paterno</th>
                                 <th>Url</th>
+                                <th>Foto</th>
                                 <th>Ver</th>
                                 <th>Descripción</th>
                                 <th>Eliminar</th>
@@ -44,6 +45,7 @@
                                 <td>{{ $products->nombre_producto }}</td>
                                 <td>{{ $products->ap_producto }}</td>
                                 <td>{{ $products->slug_producto }}</td>
+                                <td><img src="{{ $products->imagen_producto }}" width="90px" height="70px" alt=""></td>
                                     {{--  @foreach($products['cursos'] as $item)
                                     <td>{{ $item->nombre_curso }}</td>
                                     @endforeach  --}}

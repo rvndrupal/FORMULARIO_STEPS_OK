@@ -7,6 +7,7 @@ use App\Cursos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProductsController extends Controller
@@ -55,23 +56,40 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
 
-      $data= $request->validate([
+    //   $data= $request->validate([
 
-        'nombre_producto'=>'required',
-        'slug_producto'=>'required',
-        'ap_producto'=>'required',
-        'nombre_curso'=>'required',
-        'descripcion_curso'=>'required'
-      ],[
-          'nombre_producto.required'=>'El campo nombre es obligatorio'
-      ]);
+    //     'nombre_producto'=>'required',
+    //     'slug_producto'=>'required',
+    //     'ap_producto'=>'required',
+    //     'nombre_curso'=>'required',
+    //     'descripcion_curso'=>'required'
+    //   ],[
+    //       'nombre_producto.required'=>'El campo nombre es obligatorio'
+    //   ]);
 
-     DB::transaction(function () use ($data, $request) {
-         $producto=Products::create([
-            'nombre_producto'=>$data['nombre_producto'],
-            'ap_producto'=>$data['ap_producto'],
-            'slug_producto'=>$data['slug_producto']
-         ]);
+     DB::transaction(function () use ($request) {
+        //  $producto=Products::create([
+        //     'nombre_producto'=>$data['nombre_producto'],
+        //     'ap_producto'=>$data['ap_producto'],
+        //     'slug_producto'=>$data['slug_producto']
+        //  ]);
+
+       // dd($request);
+
+        $producto = Products::create($request->all());
+
+
+        if($request->file('imagen_producto')){
+
+            $path = Storage::disk('public')->put('productos',  $request->file('imagen_producto'));
+            //put es el nombre de la carpeta
+            $producto->fill(['imagen_producto' => asset($path)])->save();
+        }
+
+
+
+        //IMAGE
+
 
         //se inserta ahora lo de cursos
          //se utiliza la relacion de una vexx
@@ -135,15 +153,15 @@ class ProductsController extends Controller
            // dd($rid);        // dd($rid);
         }
 
-        $request->validate([
+        // $request->validate([
 
-            'nombre_producto'=>'required',
-            'ap_producto'=>'required',
-            'nombre_curso'=>'required',
-            'descripcion_curso'=>'required'
-          ],[
-              'nombre_producto.required'=>'El campo nombre es obligatorio'
-          ]);
+        //     'nombre_producto'=>'required',
+        //     'ap_producto'=>'required',
+        //     'nombre_curso'=>'required',
+        //     'descripcion_curso'=>'required'
+        //   ],[
+        //       'nombre_producto.required'=>'El campo nombre es obligatorio'
+        //   ]);
 
 
 
@@ -152,10 +170,20 @@ class ProductsController extends Controller
 
             //dd($producto->cursos);
 
-            $producto->nombre_producto=$request->get('nombre_producto');
-            $producto->ap_producto=$request->get('ap_producto');
-            $producto->slug_producto=$request->get('slug_producto');
-            $producto->save();
+            // $producto->nombre_producto=$request->get('nombre_producto');
+            // $producto->ap_producto=$request->get('ap_producto');
+            // $producto->slug_producto=$request->get('slug_producto');
+            // $producto->save();
+
+            $producto->fill($request->all())->save();
+            if($request->file('imagen_producto')){
+
+                $path = Storage::disk('public')->put('productos',  $request->file('imagen_producto'));
+                //put es el nombre de la carpeta
+                $producto->fill(['imagen_producto' => asset($path)])->save();
+            }
+
+            //bloque cursos
 
             $producto->cursos()->delete($rid);
             //se inserta ahora lo de cursos
