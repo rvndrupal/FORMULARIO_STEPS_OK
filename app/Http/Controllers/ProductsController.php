@@ -246,4 +246,16 @@ class ProductsController extends Controller
         $producto = Products::onlyTrashed()->find($rid)->forceDelete();
         return redirect()->route('indexlog');
     }
+
+    //PDF
+    public function pdf(Request $request){
+
+         $productos=Products::with('cursos')->get();
+         //dd($productos);
+
+         $pdf = \PDF::loadView('products.pdf', compact('productos') );
+         return $pdf->download('productos.pdf');
+     }
+
+
 }

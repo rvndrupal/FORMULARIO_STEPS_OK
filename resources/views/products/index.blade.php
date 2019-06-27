@@ -18,6 +18,9 @@
                     <a href="{{ route('indexlog') }}" class="pull-right btn btn-sm btn-dark">
                             Lista Borrados Lógicos
                     </a>
+
+                    <a href="{{ route('pdf') }}" class="btn btn-sm btn-secondary">Download PDF</a>
+
                 </div>
 
                 <div class="panel-body">
@@ -30,7 +33,6 @@
                                 <th>Apellido Paterno</th>
                                 <th>Url</th>
                                 <th>Foto</th>
-                                <th>Ver</th>
                                 <th>Descripción</th>
                                 <th>Eliminar</th>
 
@@ -49,9 +51,7 @@
                                     {{--  @foreach($products['cursos'] as $item)
                                     <td>{{ $item->nombre_curso }}</td>
                                     @endforeach  --}}
-                                <td width="10px">
-                                    <a href="#" class="btn btn-sm btn-default">Ver</a>
-                                </td>
+
                                 <td width="10px">
                                     <a href="{{ route('edit', $products->slug_producto) }}" class="btn btn-sm btn-default">Editar</a>
                                 </td>

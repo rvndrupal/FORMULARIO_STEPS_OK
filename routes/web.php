@@ -38,5 +38,9 @@ Route::delete('/permanente/{slug_producto}', 'ProductsController@destroy_permane
 
 Route::get('/recuperar/{slug_producto}', 'ProductsController@restaurar')->name('recuperar');
 
+//exportar PDF
+Route::get('/pdf', 'ProductsController@pdf')->name('pdf');
+Route::get('/pdf/detalle/{slug_producto}', 'ProductsController@pdfDetalle')->name('pdf-detalle');
+
 
 
